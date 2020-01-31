@@ -23,7 +23,7 @@
           <label for="formControlTextareaUrl">Url</label>
           <span class="help-inline" style="position:absolute">
             <a href="<%= check.url %>" target="_blank">
-              <img src="<%= route %>/images/external-link-ltr-icon.png">
+              <i class="fas fa-external-link-alt link"></i>
             </a>
           </span>
           <textarea type="text" required name="check[url]"  placeholder="http://www.example.com" class="form-control" id="formControlTextareaUrl"><%= check.url || '' %></textarea>
@@ -53,7 +53,7 @@
               </button>
               <% } %>
             </div>
-            <input id="formControlInputInterval" type="text" name="check[interval]" value="<%= (check.interval / 1000).toFixed() %>" class="form-control" placeholder="">
+            <input id="formControlInputInterval" type="number" min="60" name="check[interval]" value="<%= (check.interval / 1000).toFixed() %>" class="form-control" placeholder="">
             <div class="input-group-append">
               <span class="input-group-text">s</span>
             </div>
@@ -64,7 +64,7 @@
         <div class="form-group">
           <label for="formControlInputSlowThreshold">Slow threshold</label>
           <div class="input-group mb-3">
-            <input id="formControlInputSlowThreshold" type="text" name="check[maxTime]" value="<%= check.maxTime %>" class="form-control" placeholder="">
+            <input id="formControlInputSlowThreshold" type="number" min="0" name="check[maxTime]" value="<%= check.maxTime %>" class="form-control" placeholder="">
             <div class="input-group-append">
               <span class="input-group-text">ms</span>
             </div>
@@ -93,7 +93,7 @@
       <div class="col col-xs-12 col-md-6">
         <div class="form-group">
           <label for="formControlTextareaTags">Tags</label>
-          <textarea class="form-control" id="formControlTextareaTags" name="check[tags]" rows="2"/><%= check.tags.join(', ') %></textarea>
+          <textarea class="form-control" id="formControlTextareaTags" name="check[tags]" rows="2"><%= check.tags.join(', ') %></textarea>
         </div>
       </div>
       <% if (check.lastTested) { %>

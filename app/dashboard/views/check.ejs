@@ -7,161 +7,139 @@
 <script src="<%= route %>/javascripts/uptimeBar.js"></script>
 <script src="<%= route %>/javascripts/flotr2.min.js"></script>
 <script>
-var ejs = require('ejs');
-ejs.open = '{{';
-ejs.close = '}}';
+    var ejs = require('ejs');
+    ejs.open = '{{';
+    ejs.close = '}}';
 </script>
 <div style="float: right;">
-  <span id="check_24h"></span>
-  <a href="<%= route %>/checks/<%= check._id %>/edit" class="btn btn-primary">Edit</a>
+    <span id="check_24h"></span>
+    <a href="<%= route %>/checks/<%= check._id %>/edit" class="btn btn-primary">Edit</a>
 </div>
 <% if (info.length) { %>
-<div class="alert alert-success"><%= info %></div>
+    <div class="alert alert-success"><%= info %></div>
 <% } %>
-<div id="sectionList" class="row">
-  <div class="col col-12 col-md-3 d-none d-md-block bg-light sidebar">
-    <div class="sidebar-sticky">
-      <ul class="nav flex-column" aria-orientation="vertical">
-        <li class="nav-item">
-          <a
-            class="nav-link" href="#"
-            title="Percentage of uptime over the period"
-          >
-            Availability
-            <i class="fas fa-chevron-right"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link" href="#"
-          >
-            Downtime
-            <i class="fas fa-chevron-right"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link" href="#responseTime"
-            title="Average response time over the period"
-          >
-            Response Time
-            <i class="fas fa-chevron-right"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link" href="#responsiveness"
-            title="Percentage of pings above slow treshold over the period"
-          >
-            Responsiveness
-            <i class="fas fa-chevron-right"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link" href="#data"
-          >
-          Data
-          <i class="fas fa-chevron-right"></i>
-          </a>
-        </li>
-      </ul>
+<div id="sectionList">
+    <div class="row">
+        <div class="col">
+            <h1>
+                "<%= check.name %>"
+                <a href="<%= check.url %>" target="_blank"><i class="fas fa-external-link-alt link"></i></a>
+            </h1>
+        </div>
     </div>
-  </div>
-  <div class="col col-12 col-md-9">
-    <h1>
-      Check "<%= check.name %>"
-      <a href="<%= check.url %>" target="_blank"><img src="<%= route %>/images/external-link-ltr-icon.png"></a>
-    </h1>
     <div id="dateNavigationContainer">
-      <div id="dateNavigation">
-        <div class="row">
-          <div class="col col-2"></div>
-          <div class="col col-10">
-            <div class="title"></div>
-            <div class="timeline"></div>
-          </div>
+        <div id="dateNavigation">
+            <div class="row">
+                <div class="col">
+                    <div class="title"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9 offset-3">
+                    <div class="timeline"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-3">
+                    <ul class="btn-group zoom"></ul>
+                </div>
+                <div class="col-9">
+                    <div class="periods"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3 pt-5">
+                    <div id="secondaryNav" class="btn-group-vertical sticky-top text-center" role="tablist"
+                         aria-orientation="vertical">
+                        <a class="btn btn-dark" href="#availability" title="Percentage of uptime over the period">Availability<i
+                                    class="icon-chevron-right"></i><br/><strong class="availability"></strong>%</a>
+                        <a class="btn btn-dark" href="#events">Downtime<i
+                                    class="icon-chevron-right"></i><br/><strong
+                                    class="downtime"></strong></a>
+                        <a class="btn btn-dark" href="#responseTime" title="Average response time over the period">Response
+                            Time<i
+                                    class="icon-chevron-right"></i><br/><strong class="avgRespTime"></strong>ms</a>
+                        <a class="btn btn-dark" href="#responsiveness"
+                           title="Percentage of pings above slow treshold over the period">Responsiveness<i
+                                    class="icon-chevron-right"></i><br/><strong
+                                    class="responsiveness"></strong>%</a>
+                        <a class="btn btn-dark" href="#data">Data<i class="icon-chevron-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-9">
+                    <section id="availability">
+                        <%- partial('_availability') %>
+                    </section>
+                    <section id="events">
+                        <h2>Downtime</h2>
+                        <%- partial('_events', {url: '/api/checks/' + check._id + '/events', route: route}) %>
+                    </section>
+                    <section id="responseTime">
+                        <%- partial('_responseTime') %>
+                    </section>
+                    <section id="responsiveness">
+                        <%- partial('_responsiveness') %>
+                    </section>
+                    <section id="data">
+                        <%- partial('_data', {url: '/api/checks/' + check._id + '/stats/', route: route}) %>
+                    </section>
+                </div>
+            </div>
         </div>
-        <div class="row">
-          <div class="col col-2">
-            <ul class="btn-group zoom"></ul>
-          </div>
-          <div class="col col-10">
-            <div class="periods"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <section id="availability">
-    <%- partial('_availability') %>
-    </section>
-    <section id="events">
-    <h2>Downtime</h2>
-    <%- partial('_events', { url: '/api/checks/' + check._id + '/events', route: route }) %>
-    </section>
-    <section id="responseTime">
-    <%- partial('_responseTime') %>
-    </section>
-    <section id="responsiveness">
-    <%- partial('_responsiveness') %>
-    </section>
-    <section id="data">
-    <%- partial('_data', { url: '/api/checks/' + check._id + '/stats/', route: route } ) %>
-    </section>
-  </div>
-</div>
-<script>
-var dateInterval = new DateInterval(
-  '<%= req.query.type || 'month' %>',
-  <%= req.query.date || Date.now() %>,
-  <%= check.firstTested ? check.firstTested.valueOf() : Date.now() %>,
-  '/api/checks/<%= check._id %>/',
-  'hour'
-);
-jQuery(document).ready(function($) {
-  // highlight current section in main nav
-  $('.nav .nav-item').eq(0).find('a').addClass('active');
-  
-  // update check state live
-  updateCheckState(<%- JSON.stringify(check) %>);
-  socket.on('CheckEvent', function() {
-    $.getJSON('/api/checks/<%= check._id %>', updateCheckState);
-  });
-  
-  // initialize secondary navigation
-  new StatNavigation(dateInterval);
+        <script>
+            var dateInterval = new DateInterval(
+                '<%= req.query.type || 'month' %>',
+                    <%= req.query.date || Date.now() %>,
+                    <%= check.firstTested ? check.firstTested.valueOf() : Date.now() %>,
+                '/api/checks/<%= check._id %>/',
+                'hour'
+            );
+            jQuery(document).ready(function ($) {
+                // highlight current section in main nav
+                $('.nav .nav-item').eq(0).find('a').addClass('active');
 
-  // initialize date navigation
-  new DateNavigation(dateInterval, 'check', <%- JSON.stringify(check) %>);
-  
-  // hide alert after 5s
-  window.setTimeout(function() {
-    $('h1 + div.alert').slideUp(400, function() {
-      var offset = $('#dateNavigation').position();
-      /*$('#dateNavigation').data('affix', false).affix({
-        offset: offset
-      });
-      $('#secondaryNav').data('affix', false).affix({
-        offset: offset
-      });*/
-    });
-  }, 5000);
-  
-  // update stats for each ping if looking at the current hour
-  socket.emit('set check', '<%= check._id %>');
-  socket.on('ping', function(ping) {
-    var now = Date.now();
-    if (dateInterval.type == 'hour' && now > dateInterval.begin.valueOf() && now < dateInterval.end.valueOf()) {
-      dateInterval.refreshData();
-    }
-  });
-  
-  // update stats every 15 minutes if looking at the current moment
-  window.setInterval(function() {
-    var now = Date.now();
-    if (dateInterval.type != 'hour' && now > dateInterval.begin.valueOf() && now < dateInterval.end.valueOf()) {
-      dateInterval.refreshData();
-    }
-  }, 15 * 60 * 1000);
-});
-</script>
+                // update check state live
+                updateCheckState(<%- JSON.stringify(check) %>);
+                socket.on('CheckEvent', function () {
+                    $.getJSON('/api/checks/<%= check._id %>', updateCheckState);
+                });
+
+                // initialize secondary navigation
+                new StatNavigation(dateInterval);
+
+                // initialize date navigation
+                new DateNavigation(dateInterval, 'check', <%- JSON.stringify(check) %>);
+
+                // hide alert after 5s
+                window.setTimeout(function () {
+                    $('h1 + div.alert').slideUp(400, function () {
+                        var offset = $('#dateNavigation').position();
+                        $('#dateNavigation').data('affix', false).affix({
+                            offset: offset
+                        });
+                        $('#secondaryNav').data('affix', false).affix({
+                            offset: offset
+                        });
+                    });
+                }, 5000);
+
+                // update stats for each ping if looking at the current hour
+                socket.emit('set check', '<%= check._id %>');
+                socket.on('ping', function (ping) {
+                    var now = Date.now();
+                    if (dateInterval.type == 'hour' && now > dateInterval.begin.valueOf() && now < dateInterval.end.valueOf()) {
+                        dateInterval.refreshData();
+                    }
+                });
+
+                // update stats every 15 minutes if looking at the current moment
+                window.setInterval(function () {
+                    var now = Date.now();
+                    if (dateInterval.type != 'hour' && now > dateInterval.begin.valueOf() && now < dateInterval.end.valueOf()) {
+                        dateInterval.refreshData();
+                    }
+                }, 15 * 60 * 1000);
+            });
+        </script>
+    </div>
+</div>

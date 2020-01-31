@@ -14,9 +14,6 @@ StatNavigation.prototype.init = function() {
         statPane.find('.downtime').text(moment.duration(stat.downtime, 'seconds').humanize());
         statPane.find('.downtime').parentsUntil('li').show();
         $('#events').show();
-      } else {
-        statPane.find('.downtime').parentsUntil('li').hide();
-        $('#events').hide();
       }
     }
   });

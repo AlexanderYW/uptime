@@ -1,3 +1,8 @@
+#all_up, #all_down{
+  color: #fff;
+  font-size: 20px;
+}
+
 h1, h2, h3 {
   font-weight: normal;
 }
@@ -75,6 +80,8 @@ div.btn-toolbar {
 }
 
 .uptimeBar {
+  margin-left: 7px;
+  margin-right: 7px;
   height:15px;
   position: relative;
   background: #bfd255; /* Old browsers */
@@ -150,65 +157,8 @@ tfoot {
   color: #DDD;
 }
 
-table .header {
-  cursor: pointer;
-  background-color: #f7f7f9;
-}
-table .header:after {
-  content: "";
-  float: right;
-  margin-top: 7px;
-  border-width: 0 4px 4px;
-  border-style: solid;
-  border-color: #000000 transparent;
-  visibility: hidden;
-}
-table .headerSortUp, table .headerSortDown {
-  background-color: #f7f7f9;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
-}
-table .header:hover:after {
-  visibility: visible;
-}
-table .headerSortDown:after, table .headerSortDown:hover:after {
-  visibility: visible;
-  filter: alpha(opacity=60);
-  -moz-opacity: 0.6;
-  opacity: 0.6;
-}
-table .headerSortUp:after {
-  border-bottom: none;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 4px solid #000000;
-  visibility: visible;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-  filter: alpha(opacity=60);
-  -moz-opacity: 0.6;
-  opacity: 0.6;
-}
-
 div.tagsinput span.tag span {
   text-decoration: underline; cursor: pointer;
-}
-
-table.chart td {
-  width: 12%;
-}
-
-table.chart th.date {
-  width: 30%;
-}
-
-table.chart th.uptimeCol {
-  width: 22%;
-}
-
-table.ping .error {
-  max-width: 350px;
-  word-wrap: break-word;
 }
 
 #sectionList section {
@@ -228,9 +178,11 @@ table.ping .error {
   background-color: white;
   z-index: 50;
 }
+#secondaryNav{
+  font-size: 1vw;
+}
 #secondaryNav.affix {
   top: 91px;
-  width: 140px;
 }
 i.icon-chevron-right {
   float: right;
@@ -254,6 +206,9 @@ i.icon-chevron-right {
 .btn-small.month, .btn-small.day, .btn-small.hour, .btn-small.quarter {
   padding-right: 0;
   padding-left: 0;
+}
+.fontSize{
+  font-size: 10px;
 }
 .btn.btn-small.month {
   width: 61px;
@@ -293,4 +248,41 @@ ul.nav-tabs li span {
 }
 #check_24h + a.btn {
   margin-left: 10px;
+}
+
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: rgba(52, 58, 64, 0.3);
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+#myBtn:hover {
+  background-color: #343a40
+}
+
+.link{
+  font-size: 12px;
+}
+
+.brand{
+  width: 40px;
+}
+
+thead{
+  background-color: #343a40;
+  color: #f8f9fa;
+}
+
+.btn-group{
+  border-radius: 10px;
 }

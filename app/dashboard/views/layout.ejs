@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="display: block !important;">
   <head>
     <meta charset="utf-8">
     <title>Uptime</title>
@@ -28,9 +28,9 @@
     <div class="alert alert-success" role="alert" id="alert-version" style="display:none;">
       Check it out, version <span id="alert-version-label"></span> is now available
     </div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-        <a class="navbar-brand" href="<%= route %>/events">Uptime</a>
+        <a class="navbar-brand" href="<%= route %>/events"><img class="brand" src="<%= route %>/apple-touch-icon-red.png"></a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
@@ -48,12 +48,12 @@
           </ul>
         </div>
         <ul class="nav pull-right" id="check_summary">
-          <li id="all_up" style="display:none;">
-            <span class="label label-success">Up</span>
+          <li id="all_up">
+            <span class="label">Up</span>
             <strong class="label badge badge-success">0</strong>
           </li>
-          <li id="all_down" style="display: none;">
-            <span class="label label-important">Down</span>
+          <li id="all_down">
+            <span class="label">Down</span>
             <strong class="label badge badge-danger">0</strong>
           </li>
         </ul>
@@ -68,10 +68,8 @@
       <div class="container">
         <div class="row">
           <div class="col">
+            <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-chevron-up"></i></button>
             <p><a href="https://github.com/AlexanderYW/uptime">Uptime <%= version %></a>, powered by <a href="http://nodejs.org/">Node.js</a>, <a href="http://www.mongodb.org/">MongoDB</a>, and <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>.</p>
-          </div>
-          <div class="col">
-            <p class="text-right"><a href="#">Back to top</a></p>
           </div>
           <div class="w-100"></div>
           <div class="col">
@@ -90,20 +88,12 @@
       }
       var updateCounts = function() {
         $.getJSON('/api/checks/count', function(count) {
-          if (count.total > 0) {
+
             $('#all_up').show().children('strong').text(count.up);
-          } else {
-            $('#all_up').hide();
-          }
-          if (count.down > 0) {
+
             $('#all_down').show().children('strong').text(count.down);
             changeFavicon(true);
-          } else {
-            $('#all_down').hide();
-            if (nbNewEvents > 0) {
-              changeFavicon(false);
-            }
-          }
+
           if (nbNewEvents > 0) {
             document.title = '(' + nbNewEvents +') Uptime';
           };
@@ -143,6 +133,39 @@
         return true;
       }
     });
+
+    jQuery(document).ready(function() {
+
+      var btn = $('#buttonTop');
+
+      $(window).scroll(function() {
+        if ($(window).scrollTop() > 300) {
+          btn.addClass('show');
+        } else {
+          btn.removeClass('show');
+        }
+      });
+
+      btn.on('click', function(e) {
+        e.preventDefault();
+        $('html, body').animate({scrollTop:0}, '300');
+      });
+
+    });
+
+    mybutton = document.getElementById("myBtn");
+    window.onscroll = function() {scrollFunction()};
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+    }
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
     </script>
   </body>
 </html>
